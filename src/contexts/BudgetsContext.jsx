@@ -24,16 +24,15 @@ const BudgetsContext = createContext({
   addExpense:()=>{},
   addBudget:()=>{},
   deleteItem:()=>{},
+  getTotalAmount:()=>{},
+  getTotalMax:()=>{},
 });
 
 
 // 2- create context provider that wrapes the whole app
 export const BudgetsProvider = ({children}) => 
 {
-  //for card color ///////////////////////////////////////////////////////
   
-
-  //////////////////////////////////////////////////////////////////////////
   const [budgets , setBudgets] = useLocalStorage('budgets',[]);
   const [expenses, setExpenses] = useLocalStorage('expenses',[]);
 
@@ -74,12 +73,15 @@ export const BudgetsProvider = ({children}) =>
         return prevBudgets.filter(prevBudget => prevBudget.id !== id)
       })
     }else if(item_type === "expense") {
+      
       setExpenses(prevExpenses => {
         return prevExpenses.filter(prevExpense => prevExpense.id !== id)
       })
     }
   }
 
+  const getTotalAmount = () => expenses.reduce((total,expense)=>total+expense.amount,0)
+  const getTotalMax = () => budgets.reduce((total,budget)=>total+budget.max,0)
 
   const store = {
     budgets,
@@ -89,7 +91,9 @@ export const BudgetsProvider = ({children}) =>
     addBudget,
     deleteItem,
     getBudgetExpensesTotalAmount,
-    getBudgetById
+    getBudgetById,
+    getTotalAmount,
+    getTotalMax
 }
 
     return (<BudgetsContext.Provider value={store}>

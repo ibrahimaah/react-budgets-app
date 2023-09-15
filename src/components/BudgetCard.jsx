@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from "../contexts/BudgetsContext";
 
-export default function BudgetCard({name , amount, max, budget_id, showBudgetExpensesModal }) {
+export default function BudgetCard({name , amount, max, budget_id, showBudgetExpensesModal ,showExpensesModal}) {
   const { getBudgetById, addBudget } =useBudgets();
 
   // console.log(max)
@@ -61,8 +61,13 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
             )
           }
 
-          <Button variant="outline-primary" className="ms-auto me-3" onClick={()=>showBudgetExpensesModal(budget_id)}>Add Expense</Button>
-          <Button variant="outline-secondary">View Expenses</Button>
+          {
+            budget_id &&
+            (<>
+              <Button variant="outline-primary" className="ms-auto me-3" onClick={()=>showBudgetExpensesModal(budget_id)}>Add Expense</Button>
+              <Button variant="outline-secondary" onClick = {() => showExpensesModal(budget_id) }>View Expenses</Button>
+            </>)
+          }
         </Card.Body>
     </Card>
   )

@@ -5,6 +5,7 @@ import BudgetCard from './components/BudgetCard';
 import AddBudgetModal from './components/AddBudgetModal';
 import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from './contexts/BudgetsContext';
 import AddExpenseModal from './components/AddExpenseModal';
+import ViewExpensesModal from './components/ViewExpensesModal';
 
 
 const App = () => {
@@ -13,9 +14,10 @@ const App = () => {
 
   let [showAddBudgetModal, setShowAddBudgetModal] = useState(false)
   let [showAddExpenseModal, setShowAddExpenseModal] = useState(false)
+  let [showViewExpensesModal, setShowViewExpensesModal] = useState(false)
   let [budgetId,setBudgetId] = useState()
 
-  const { budgets,getBudgetExpensesTotalAmount } = useBudgets()
+  const { budgets,getBudgetExpensesTotalAmount, getTotalAmount, getTotalMax } = useBudgets()
 
   
   const showBudgetExpensesModal = (budget_id) => {
@@ -25,6 +27,10 @@ const App = () => {
     
   }
   
+  const showExpensesModal = (budget_id) => {
+    setBudgetId(budget_id)
+    setShowViewExpensesModal(true)
+  }
   
   return (
     <>
@@ -51,6 +57,7 @@ const App = () => {
                   max={budget.max}
                   budget_id={budget.id}
                   showBudgetExpensesModal ={()=>showBudgetExpensesModal(budget.id)}
+                  showExpensesModal = {()=>showExpensesModal(budget.id)}
               />
             </Col>
             )
@@ -60,7 +67,17 @@ const App = () => {
 
           
         </Row>
-
+        <Row>
+          <Col sm={6}>
+                <BudgetCard 
+                    name="Total" 
+                    amount={getTotalAmount()}
+                    max={getTotalMax() ? getTotalMax() : null}
+                    budget_id={null}
+                    showBudgetExpensesModal ={null}
+                />
+          </Col>
+        </Row>
       </Container> 
 
 
@@ -71,6 +88,11 @@ const App = () => {
                        budgetId={budgetId}
                        
       />  
+      <ViewExpensesModal 
+                      show={showViewExpensesModal}
+                      handleClose={() => setShowViewExpensesModal(false)} 
+                      budgetId={budgetId}
+      />
     </>
   )
 }
