@@ -13,6 +13,7 @@ function AddExpenseModal({show,handleClose,budgetId}) {
   
 
   const handleSubmit = (e) => {
+
     e.preventDefault()
 
     const current_form = formRef.current
@@ -23,7 +24,7 @@ function AddExpenseModal({show,handleClose,budgetId}) {
     if (!expense_description || !expense_amount) {
       return
     }
-    
+
     addExpense({
       description:expense_description,
       amount : parseFloat(expense_amount),
@@ -67,16 +68,14 @@ function AddExpenseModal({show,handleClose,budgetId}) {
               />
             </Form.Group>
 
-            <Form.Select name="budget">
-                <option value={UN_CATEGORIZED_BUDGET_ID}>UnCategorized</option>
+            <Form.Select name="budget" defaultValue={budgetId}>
                 {
                     budgets.map(budget => {
                         return (
-                            <option key={budget.id} value={budget.id} selected={budget.id===budgetId }>{budget.name}</option>
+                            <option key={budget.id} value={budget.id}>{budget.name}</option>
                         )
                     })
                 }
-                
             </Form.Select>
            
           </Form>

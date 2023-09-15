@@ -4,9 +4,11 @@ import { v4 } from "uuid";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 /**
+ * 
  * budget {
  * id , name , max
  * }
+ * 
  * expense {
  * id, desc, amount, budget_id
  * }
@@ -18,6 +20,7 @@ const BudgetsContext = createContext({
   expenses:[],
   getBudgetExpenses:()=>{},
   getBudgetExpensesTotalAmount:()=>{},
+  getBudgetById:()=>{},
   addExpense:()=>{},
   addBudget:()=>{},
   deleteItem:()=>{},
@@ -55,6 +58,10 @@ export const BudgetsProvider = ({children}) =>
     setBudgets(prevBudgets => {
       if (prevBudgets.find(prevBudget => prevBudget.name === name)) {
         return prevBudgets;
+      }
+      //initializing unCategorized Budget
+      if(!max){
+        return [...prevBudgets,{id:UN_CATEGORIZED_BUDGET_ID,name,max}]
       }
       return [...prevBudgets,{id:v4(),name,max}]
     })

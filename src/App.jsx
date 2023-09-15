@@ -17,10 +17,14 @@ const App = () => {
 
   const { budgets,getBudgetExpensesTotalAmount } = useBudgets()
 
+  
   const showBudgetExpensesModal = (budget_id) => {
-    setShowAddExpenseModal(true)
+    
     setBudgetId(budget_id)
+    setShowAddExpenseModal(true)
+    
   }
+  
   
   return (
     <>
@@ -35,9 +39,9 @@ const App = () => {
         <Row>
         {
           budgets.map(budget => {
-            console.log(budget)
+            
             const amount = getBudgetExpensesTotalAmount(budget.id)
-
+            
             return (
             <Col sm={6} key={budget.id}>
               <BudgetCard 

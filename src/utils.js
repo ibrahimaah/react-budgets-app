@@ -28,8 +28,16 @@ export const currencyFormatter = (number) => {
 // }
 
 ////////////////////////////////////////////////////////////
-export function getCardColor(ratio)
+export function getCardColor(amount,max)
 {
+
+  //max=null i.e it is unCategorized Budget
+  if (!max) {
+    return 'secondary'
+  }
+
+  let ratio = amount/max
+
   if(ratio < 0.5)
   {
     return'primary'
