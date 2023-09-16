@@ -70,13 +70,12 @@ export const BudgetsProvider = ({children}) =>
   }
 
   const deleteItem = ({id,item_type}) => {
-    
     if (item_type === "budget") {
       
       setExpenses(prevExpenses => {
         return prevExpenses.map(expense => {
           if (expense.budgetId !== id) {
-            return
+            return expense
           }else{
             return {...expense,budgetId:UN_CATEGORIZED_BUDGET_ID}
           }

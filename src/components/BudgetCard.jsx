@@ -1,4 +1,4 @@
-import { Button, Card, ProgressBar } from "react-bootstrap";
+import { Button, Card, ProgressBar, Stack } from "react-bootstrap";
 import { currencyFormatter, getCardColor } from "../utils";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -25,7 +25,7 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
     let UnCategorizedBudget = getBudgetById(UN_CATEGORIZED_BUDGET_ID)
     if (!UnCategorizedBudget) {
       addBudget({
-        name : 'UnCategorized Expenses',
+        name : 'UnCategorized',
         max: null
       })
     }
@@ -72,11 +72,11 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
 
           {
             budget_id &&
-            (<>
+            (<Stack direction="horizontal" gap={3}>
               <Button variant="outline-primary"  onClick={()=>showBudgetExpensesModal(budget_id)}>Add Expense</Button>
               <Button variant="outline-secondary" onClick = {() => showExpensesModal(budget_id) }>View Expenses</Button>
-              { (budget_id !== UN_CATEGORIZED_BUDGET_ID)  && (<Button variant="outline-danger"  onClick = {() => deleteBudget(budget_id) }>Delete</Button>) }
-            </>)
+              { (budget_id !== UN_CATEGORIZED_BUDGET_ID)  && (<Button variant="outline-danger" className="ms-auto"  onClick = {() => deleteBudget(budget_id) }>Delete</Button>) }
+            </Stack>)
           }
         </Card.Body>
     </Card>

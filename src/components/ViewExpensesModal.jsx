@@ -3,6 +3,7 @@ import { Button, Modal, Stack } from 'react-bootstrap';
 import { useBudgets } from '../contexts/BudgetsContext';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { currencyFormatter } from '../utils';
 
 // import { useBudgets } from '../contexts/BudgetsContext';
 
@@ -26,23 +27,23 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
 
         <Modal.Body>
           <Stack direction='vertical' gap={3}>
-            <Stack direction='horizontal' gap={2}>
+            
                 {
                     budgetExpenses?.map(expense => {
                         return (
-                          <React.Fragment key={expense.id}>
+                          <Stack direction='horizontal' gap={3} key={expense.id}>
                                 <div>{expense?.description}</div>
-                                <div>{expense?.amount}</div>
+                                <div className='ms-auto'>{currencyFormatter(expense?.amount)}</div>
                                 <div>
                                     <button 
                                         className='btn btn-sm btn-outline-danger'
                                         onClick={()=>deleteItem({id:expense.id,item_type:'expense'})}>X</button>
                                 </div>
-                          </React.Fragment>
+                          </Stack>
                         )
                     })
                 }
-            </Stack>
+            
           </Stack>
         </Modal.Body>
 
