@@ -1,6 +1,8 @@
 
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { useBudgets } from '../contexts/BudgetsContext';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 // import { useBudgets } from '../contexts/BudgetsContext';
 
@@ -28,7 +30,7 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
                 {
                     budgetExpenses?.map(expense => {
                         return (
-                            <>
+                          <React.Fragment key={expense.id}>
                                 <div>{expense?.description}</div>
                                 <div>{expense?.amount}</div>
                                 <div>
@@ -36,7 +38,7 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
                                         className='btn btn-sm btn-outline-danger'
                                         onClick={()=>deleteItem({id:expense.id,item_type:'expense'})}>X</button>
                                 </div>
-                            </>
+                          </React.Fragment>
                         )
                     })
                 }

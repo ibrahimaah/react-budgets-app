@@ -3,11 +3,12 @@ import { currencyFormatter, getCardColor } from "../utils";
 import { useState } from "react";
 import { useEffect } from "react";
 import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from "../contexts/BudgetsContext";
+// import { v4 } from "uuid";
 
 export default function BudgetCard({name , amount, max, budget_id, showBudgetExpensesModal ,showExpensesModal}) {
-  const { getBudgetById, addBudget } =useBudgets();
+  const { getBudgetById, addBudget, deleteItem } =useBudgets();
 
-  // console.log(max)
+  
   
   const[cardState,setCardState] = useState(()=>{
     return getCardColor(amount,max)
@@ -31,7 +32,15 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
   },[])
   
 
-  
+  const deleteBudget = (budget_id) => {
+    if (confirm("Are you sure ?") == true){
+      deleteItem({id:budget_id,item_type:'budget'})
+    } 
+    else {
+      return
+    }
+    
+  }
   return (
     <Card style={{ width: '100%' }} className={"mb-4 bg-opacity-10 bg-"+cardState}>
       
@@ -64,8 +73,9 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
           {
             budget_id &&
             (<>
-              <Button variant="outline-primary" className="ms-auto me-3" onClick={()=>showBudgetExpensesModal(budget_id)}>Add Expense</Button>
+              <Button variant="outline-primary"  onClick={()=>showBudgetExpensesModal(budget_id)}>Add Expense</Button>
               <Button variant="outline-secondary" onClick = {() => showExpensesModal(budget_id) }>View Expenses</Button>
+              { (budget_id !== UN_CATEGORIZED_BUDGET_ID)  && (<Button variant="outline-danger"  onClick = {() => deleteBudget(budget_id) }>Delete</Button>) }
             </>)
           }
         </Card.Body>

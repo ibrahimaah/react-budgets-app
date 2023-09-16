@@ -15,10 +15,11 @@ const App = () => {
   let [showAddBudgetModal, setShowAddBudgetModal] = useState(false)
   let [showAddExpenseModal, setShowAddExpenseModal] = useState(false)
   let [showViewExpensesModal, setShowViewExpensesModal] = useState(false)
+  
   let [budgetId,setBudgetId] = useState()
 
-  const { budgets,getBudgetExpensesTotalAmount, getTotalAmount, getTotalMax } = useBudgets()
-
+  const { budgets,expenses,getBudgetExpensesTotalAmount, getTotalAmount, getTotalMax,getBudgetExpenses } = useBudgets()
+  
   
   const showBudgetExpensesModal = (budget_id) => {
     
@@ -48,6 +49,13 @@ const App = () => {
             
             const amount = getBudgetExpensesTotalAmount(budget.id)
             
+            //we don't show unCategorized expenses if there is no unCategorized expenses
+            // console.log('budet_id ',budget.id)
+            
+            if (budget.id === UN_CATEGORIZED_BUDGET_ID && getBudgetExpenses(budget.id).length === 0) {
+              return
+            }
+
             return (
             <Col sm={6} key={budget.id}>
               <BudgetCard 
@@ -68,7 +76,10 @@ const App = () => {
           
         </Row>
         <Row>
-          <Col sm={6}>
+          {
+            
+            expenses.length > 0 &&
+            (<Col sm={6}>
                 <BudgetCard 
                     name="Total" 
                     amount={getTotalAmount()}
@@ -76,7 +87,8 @@ const App = () => {
                     budget_id={null}
                     showBudgetExpensesModal ={null}
                 />
-          </Col>
+          </Col>)
+          }
         </Row>
       </Container> 
 

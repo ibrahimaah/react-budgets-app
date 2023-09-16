@@ -40,7 +40,9 @@ export const BudgetsProvider = ({children}) =>
 
   const getBudgetById = budgetId => budgets.find(budget => budget.id === budgetId)
 
-  const getBudgetExpenses = budgetId => expenses.filter(expense => expense.budgetId === budgetId)
+  const getBudgetExpenses = budgetId => {
+    return expenses.filter(expense => expense.budgetId === budgetId)
+  }
   
   const getBudgetExpensesTotalAmount = (budgetId) => 
   { 
@@ -49,7 +51,8 @@ export const BudgetsProvider = ({children}) =>
 
 
   const addExpense = ({budgetId,amount,description}) => {
-    setExpenses(prevExpenses => [...prevExpenses,{id:v4(),budgetId,amount,description}])}
+    setExpenses(prevExpenses => [...prevExpenses,{id:v4(),budgetId,amount,description}])
+  }
 
 
 
@@ -67,12 +70,25 @@ export const BudgetsProvider = ({children}) =>
   }
 
   const deleteItem = ({id,item_type}) => {
+    
     if (item_type === "budget") {
-      // TODO: Deal with expenses
+      
+      setExpenses(prevExpenses => {
+        return prevExpenses.map(expense => {
+          if (expense.budgetId !== id) {
+            return
+          }else{
+            return {...expense,budgetId:UN_CATEGORIZED_BUDGET_ID}
+          }
+        })
+      })
+
       setBudgets(prevBudgets => {
         return prevBudgets.filter(prevBudget => prevBudget.id !== id)
       })
-    }else if(item_type === "expense") {
+    }
+    
+    else if(item_type === "expense") {
       
       setExpenses(prevExpenses => {
         return prevExpenses.filter(prevExpense => prevExpense.id !== id)
