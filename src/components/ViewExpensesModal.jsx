@@ -1,9 +1,11 @@
 
 import { Button, Modal, Stack } from 'react-bootstrap';
-import { useBudgets } from '../contexts/BudgetsContext';
+import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from '../contexts/BudgetsContext';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { currencyFormatter } from '../utils';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 // import { useBudgets } from '../contexts/BudgetsContext';
 
@@ -11,8 +13,8 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
   
 
   
-  const { getBudgetById,getBudgetExpenses,deleteItem } = useBudgets()
-  
+  const { getBudgetById,getBudgetExpenses,deleteItem,code } = useBudgets()
+  const { t } = useTranslation();
 
   let budget = getBudgetById(budgetId)
   let budgetExpenses = getBudgetExpenses(budgetId)
@@ -22,7 +24,9 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
       <Modal show={show} onHide={handleClose}>
 
         <Modal.Header closeButton>
-          <Modal.Title>{budget?.name} - Expenses</Modal.Title>
+          <Modal.Title>
+            {(budgetId === UN_CATEGORIZED_BUDGET_ID && code === 'ar') ? t('expenses') + ' غير مصنفة' : budget?.name+' - '+ t('expenses') }
+          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>

@@ -1,5 +1,5 @@
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { v4 } from "uuid";
 import useLocalStorage from "../hooks/useLocalStorage";
 
@@ -36,6 +36,7 @@ export const BudgetsProvider = ({children}) =>
   const [budgets , setBudgets] = useLocalStorage('budgets',[]);
   const [expenses, setExpenses] = useLocalStorage('expenses',[]);
 
+  const [code,setCode] = useState('en')
   
 
   const getBudgetById = budgetId => budgets.find(budget => budget.id === budgetId)
@@ -108,7 +109,9 @@ export const BudgetsProvider = ({children}) =>
     getBudgetExpensesTotalAmount,
     getBudgetById,
     getTotalAmount,
-    getTotalMax
+    getTotalMax,
+    code,
+    setCode
 }
 
     return (<BudgetsContext.Provider value={store}>

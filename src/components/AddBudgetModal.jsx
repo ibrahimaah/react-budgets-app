@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useBudgets } from '../contexts/BudgetsContext';
+import { useTranslation } from 'react-i18next';
 
 // import { useBudgets } from '../contexts/BudgetsContext';
 
@@ -9,7 +10,7 @@ function AddBudgetModal({show,handleClose}) {
   
   const formRef = useRef()
   const { addBudget } = useBudgets()
-  
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -37,14 +38,14 @@ function AddBudgetModal({show,handleClose}) {
       <Modal show={show} onHide={handleClose}>
 
         <Modal.Header closeButton>
-          <Modal.Title>Add New Budget</Modal.Title>
+          <Modal.Title>{t('addNewBudget')}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <Form ref={formRef}>
 
             <Form.Group className="mb-3" controlId="add-budget-name">
-              <Form.Label>Name :</Form.Label>
+              <Form.Label>{t('name')} :</Form.Label>
               <Form.Control
                 type="text"
                 autoFocus
@@ -54,7 +55,7 @@ function AddBudgetModal({show,handleClose}) {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="add-budget-maximum-spending">
-              <Form.Label>Maximum Spending :</Form.Label>
+              <Form.Label>{t('maxSpending')} :</Form.Label>
               <Form.Control
                 type="number"
                 min={0}
@@ -70,10 +71,10 @@ function AddBudgetModal({show,handleClose}) {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t('close')}
           </Button>
           <Button variant="primary" onClick={handleSubmit}>
-            Add
+            {t('add')}
           </Button>
         </Modal.Footer>
 

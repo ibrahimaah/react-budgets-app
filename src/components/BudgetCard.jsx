@@ -3,7 +3,8 @@ import { currencyFormatter, getCardColor } from "../utils";
 import { useState } from "react";
 import { useEffect } from "react";
 import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from "../contexts/BudgetsContext";
-// import { v4 } from "uuid";
+import { useTranslation } from "react-i18next";
+
 
 export default function BudgetCard({name , amount, max, budget_id, showBudgetExpensesModal ,showExpensesModal}) {
   const { getBudgetById, addBudget, deleteItem } =useBudgets();
@@ -14,7 +15,7 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
     return getCardColor(amount,max)
   })
 
-  
+  const { t } = useTranslation();
   useEffect(()=>{
     setCardState(getCardColor(amount,max))
   },[amount,max,cardState])
@@ -73,9 +74,9 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
           {
             budget_id &&
             (<Stack direction="horizontal" gap={3}>
-              <Button variant="outline-primary"  onClick={()=>showBudgetExpensesModal(budget_id)}>Add Expense</Button>
-              <Button variant="outline-secondary" onClick = {() => showExpensesModal(budget_id) }>View Expenses</Button>
-              { (budget_id !== UN_CATEGORIZED_BUDGET_ID)  && (<Button variant="outline-danger" className="ms-auto"  onClick = {() => deleteBudget(budget_id) }>Delete</Button>) }
+              <Button variant="outline-primary"  onClick={()=>showBudgetExpensesModal(budget_id)}>{t('addExpense')}</Button>
+              <Button variant="outline-secondary" onClick = {() => showExpensesModal(budget_id) }>{t('viewExpenses')}</Button>
+              { (budget_id !== UN_CATEGORIZED_BUDGET_ID)  && (<Button variant="outline-danger" className="ms-auto"  onClick = {() => deleteBudget(budget_id) }>{t('delete')}</Button>) }
             </Stack>)
           }
         </Card.Body>

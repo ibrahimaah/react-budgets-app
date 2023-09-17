@@ -1,4 +1,4 @@
-import React, { useState } from 'react' 
+import React, { useEffect, useState } from 'react' 
 
 import { Button, Col, Container, Row, Stack} from 'react-bootstrap';
 import BudgetCard from './components/BudgetCard';
@@ -6,6 +6,7 @@ import AddBudgetModal from './components/AddBudgetModal';
 import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from './contexts/BudgetsContext';
 import AddExpenseModal from './components/AddExpenseModal';
 import ViewExpensesModal from './components/ViewExpensesModal';
+import { useTranslation } from 'react-i18next';
 
 
 const App = () => {
@@ -16,8 +17,16 @@ const App = () => {
   
   let [budgetId,setBudgetId] = useState()
 
-  const { budgets,getBudgetExpensesTotalAmount, getTotalAmount, getTotalMax,getBudgetExpenses } = useBudgets()
+  const { budgets,
+          getBudgetExpensesTotalAmount,
+          getTotalAmount,
+          getTotalMax,
+          getBudgetExpenses,
+          code,
+          setCode } = useBudgets()
   
+  const { t, i18n } = useTranslation();
+
   let unCategoricalExpenses = getBudgetExpenses(UN_CATEGORIZED_BUDGET_ID)
   
   const showBudgetExpensesModal = (budget_id) => {
@@ -32,14 +41,37 @@ const App = () => {
     setShowViewExpensesModal(true)
   }
   
+  const handleTrans = (code) => {
+    if (code === 'en') {
+      setCode('ar')
+      i18n.changeLanguage('ar')
+    }else{
+      setCode('en')
+      i18n.changeLanguage('en')
+    }
+    
+  }
   return (
     <>
       <Container className='my-4'>
 
         <Stack direction="horizontal" className="mb-4" gap={3}> 
           <h1 className='display-4 fw-bold text-primary'>Budgets</h1>
-          <Button variant="primary" className="ms-auto" onClick={() => setShowAddBudgetModal(true)}>Add Budget</Button>
-          <Button variant="outline-primary" onClick={() => showBudgetExpensesModal(UN_CATEGORIZED_BUDGET_ID)}>Add Expense</Button>
+          <Button 
+              variant="primary" 
+              className="ms-auto" 
+              onClick={() => setShowAddBudgetModal(true)}>{t('addBudget')}</Button>
+
+          <Button variant="outline-primary" 
+                  onClick={() => showBudgetExpensesModal(UN_CATEGORIZED_BUDGET_ID)}>
+                    {t('addExpense')}
+                  </Button>
+
+          <Button 
+              variant='success' 
+              className='btn-sm'
+              onClick={()=>handleTrans(code)}>{code === 'en' ? 'العربية' : 'English'}
+          </Button>
         </Stack>
 
         <Row className='justify-content-center'>
@@ -58,7 +90,7 @@ const App = () => {
             <Col sm={budget.id === UN_CATEGORIZED_BUDGET_ID ? 8 : 6} key={budget.id}>
               <BudgetCard 
                   // key={budget.id}
-                  name={budget.name} 
+                  name={ (budget.id === UN_CATEGORIZED_BUDGET_ID && code === 'ar') ? 'غير مصنفة' : budget.name} 
                   amount={amount}
                   max={budget.max}
                   budget_id={budget.id}
@@ -78,7 +110,7 @@ const App = () => {
             budgets.length > 2 && unCategoricalExpenses.length === 0) &&
             (<Col sm={8}>
                 <BudgetCard 
-                    name="Total" 
+                    name={t('total')} 
                     amount={getTotalAmount()}
                     max={getTotalMax() ? getTotalMax() : null}
                     budget_id={null}
