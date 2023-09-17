@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react' 
 
-import { Button, Col, Container, Row, Stack} from 'react-bootstrap';
+import { Button, Col, Container, Row, Stack, Form, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import BudgetCard from './components/BudgetCard';
 import AddBudgetModal from './components/AddBudgetModal';
 import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from './contexts/BudgetsContext';
 import AddExpenseModal from './components/AddExpenseModal';
 import ViewExpensesModal from './components/ViewExpensesModal';
-import { useTranslation } from 'react-i18next';
-
 
 const App = () => {
 
@@ -23,9 +21,12 @@ const App = () => {
           getTotalMax,
           getBudgetExpenses,
           code,
-          setCode } = useBudgets()
+          setCode,
+          t,
+          i18n } = useBudgets()
+          
   
-  const { t, i18n } = useTranslation();
+
 
   let unCategoricalExpenses = getBudgetExpenses(UN_CATEGORIZED_BUDGET_ID)
   
@@ -49,18 +50,29 @@ const App = () => {
       setCode('en')
       i18n.changeLanguage('en')
     }
-    
   }
+
+  
   return (
     <>
+
+
       <Container className='my-4'>
 
         <Stack direction="horizontal" className="mb-4" gap={3}> 
-          <h1 className='display-4 fw-bold text-primary'>Budgets</h1>
+          <h1 style={{
+              fontFamily: 'Arial, sans-serif',
+              fontSize: '42px',
+              textTransform: 'uppercase',
+              letterSpacing: '2px',
+              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+              transition: 'color 0.3s ease-in-out'
+          }}
+          className='text-primary'>Budget Tracker</h1>
           <Button 
               variant="primary" 
               className="ms-auto" 
-              onClick={() => setShowAddBudgetModal(true)}>{t('addBudget')}</Button>
+              onClick={() => setShowAddBudgetModal(true)}>{ t('addBudget') }</Button>
 
           <Button variant="outline-primary" 
                   onClick={() => showBudgetExpensesModal(UN_CATEGORIZED_BUDGET_ID)}>

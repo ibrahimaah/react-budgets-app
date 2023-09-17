@@ -9,8 +9,7 @@ function AddBudgetModal({show,handleClose}) {
 
   
   const formRef = useRef()
-  const { addBudget,code } = useBudgets()
-  const { t } = useTranslation();
+  const { addBudget,code, t } = useBudgets()
 
   const handleSubmit = (e) => {
     e.preventDefault()

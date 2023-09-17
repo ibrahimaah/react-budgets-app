@@ -1,7 +1,8 @@
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { v4 } from "uuid";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { useTranslation } from "react-i18next";
 
 /**
  * 
@@ -37,7 +38,7 @@ export const BudgetsProvider = ({children}) =>
   const [expenses, setExpenses] = useLocalStorage('expenses',[]);
 
   const [code,setCode] = useLocalStorage('code','en')
-  
+  const { t, i18n } = useTranslation();
 
   const getBudgetById = budgetId => budgets.find(budget => budget.id === budgetId)
 
@@ -99,6 +100,8 @@ export const BudgetsProvider = ({children}) =>
   const getTotalAmount = () => expenses.reduce((total,expense)=>total+expense.amount,0)
   const getTotalMax = () => budgets.reduce((total,budget)=>total+budget.max,0)
 
+  useEffect(()=>{i18n.changeLanguage(code)},[code,setCode])
+
   const store = {
     budgets,
     expenses,
@@ -111,7 +114,9 @@ export const BudgetsProvider = ({children}) =>
     getTotalAmount,
     getTotalMax,
     code,
-    setCode
+    setCode,
+    t,
+    i18n
 }
 
     return (<BudgetsContext.Provider value={store}>

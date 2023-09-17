@@ -44,7 +44,7 @@ i18n
          addNewBudget:"إضافة ميزانية جديدة",
          addNewExpense:"إضافة مصروف جديد",
          desc:"الوصف",
-         amount:"الكمية",
+         amount:"المبلغ",
          name:"الاسم",
          maxSpending:"الحد الأقصى"
 

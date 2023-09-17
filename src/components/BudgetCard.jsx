@@ -3,11 +3,10 @@ import { currencyFormatter, getCardColor } from "../utils";
 import { useState } from "react";
 import { useEffect } from "react";
 import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from "../contexts/BudgetsContext";
-import { useTranslation } from "react-i18next";
 
 
 export default function BudgetCard({name , amount, max, budget_id, showBudgetExpensesModal ,showExpensesModal}) {
-  const { getBudgetById, addBudget, deleteItem, code } =useBudgets();
+  const { getBudgetById, addBudget, deleteItem, code, t} =useBudgets();
 
   
   
@@ -15,7 +14,6 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
     return getCardColor(amount,max)
   })
 
-  const { t } = useTranslation();
   useEffect(()=>{
     setCardState(getCardColor(amount,max))
   },[amount,max,cardState])

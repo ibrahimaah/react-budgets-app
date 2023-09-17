@@ -4,8 +4,6 @@ import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from '../contexts/BudgetsContext
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { currencyFormatter } from '../utils';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
 
 // import { useBudgets } from '../contexts/BudgetsContext';
 
@@ -13,8 +11,8 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
   
 
   
-  const { getBudgetById,getBudgetExpenses,deleteItem,code } = useBudgets()
-  const { t } = useTranslation();
+  const { getBudgetById,getBudgetExpenses,deleteItem,code,t } = useBudgets()
+  
 
   let budget = getBudgetById(budgetId)
   let budgetExpenses = getBudgetExpenses(budgetId)
@@ -35,9 +33,9 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
                 {
                     budgetExpenses?.map(expense => {
                         return (
-                          <Stack direction='horizontal' gap={3} key={expense.id}>
+                          <Stack className={code==='ar' ? 'flex-row-reverse' : ''} direction='horizontal' gap={3} key={expense.id}>
                                 <div>{expense?.description}</div>
-                                <div className='ms-auto'>{currencyFormatter(expense?.amount)}</div>
+                                <div className={`m${code==='ar' ? 'e' : 's'}-auto`}  >{currencyFormatter(expense?.amount)}</div>
                                 <div>
                                     <button 
                                         className='btn btn-sm btn-outline-danger'
@@ -51,7 +49,7 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
           </Stack>
         </Modal.Body>
 
-        <Modal.Footer>
+        <Modal.Footer className={code === 'ar' ? 'justify-content-start' : ''}>
           <Button variant="danger" onClick={handleClose}>
             {t('close')}
           </Button> 

@@ -10,9 +10,7 @@ function AddExpenseModal({show,handleClose,budgetId}) {
 
   const formRef = useRef()
   const { addExpense,
-          budgets,code } = useBudgets()
-  
-  const { t } = useTranslation();
+          budgets,code, t } = useBudgets()
 
   const handleSubmit = (e) => {
 
