@@ -9,7 +9,7 @@ function AddBudgetModal({show,handleClose}) {
 
   
   const formRef = useRef()
-  const { addBudget } = useBudgets()
+  const { addBudget,code } = useBudgets()
   const { t } = useTranslation();
 
   const handleSubmit = (e) => {
@@ -35,32 +35,34 @@ function AddBudgetModal({show,handleClose}) {
   return (
     <>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} backdrop="static">
 
-        <Modal.Header closeButton>
-          <Modal.Title>{t('addNewBudget')}</Modal.Title>
+        <Modal.Header closeButton={false}>
+          <Modal.Title className='m-auto'>{t('addNewBudget')}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Form ref={formRef}>
+          <Form ref={formRef} className={code==='ar' ? 'text-end' :''}>
 
             <Form.Group className="mb-3" controlId="add-budget-name">
-              <Form.Label>{t('name')} :</Form.Label>
+              <Form.Label>{t('name')}</Form.Label>
               <Form.Control
                 type="text"
                 autoFocus
                 name="name"
+                className={code==='ar' ? 'text-end' :''}
                 required
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="add-budget-maximum-spending">
-              <Form.Label>{t('maxSpending')} :</Form.Label>
+              <Form.Label>{t('maxSpending')}</Form.Label>
               <Form.Control
                 type="number"
                 min={0}
                 step={0.1}
                 name='maximum_spending'
+                className={code==='ar' ? 'text-end' :''}
                 required 
               />
             </Form.Group>
@@ -70,7 +72,7 @@ function AddBudgetModal({show,handleClose}) {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="danger" onClick={handleClose}>
             {t('close')}
           </Button>
           <Button variant="primary" onClick={handleSubmit}>

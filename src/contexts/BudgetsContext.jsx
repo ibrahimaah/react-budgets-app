@@ -36,7 +36,7 @@ export const BudgetsProvider = ({children}) =>
   const [budgets , setBudgets] = useLocalStorage('budgets',[]);
   const [expenses, setExpenses] = useLocalStorage('expenses',[]);
 
-  const [code,setCode] = useState('en')
+  const [code,setCode] = useLocalStorage('code','en')
   
 
   const getBudgetById = budgetId => budgets.find(budget => budget.id === budgetId)

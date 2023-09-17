@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { useBudgets } from '../contexts/BudgetsContext';
+import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from '../contexts/BudgetsContext';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
@@ -10,7 +10,7 @@ function AddExpenseModal({show,handleClose,budgetId}) {
 
   const formRef = useRef()
   const { addExpense,
-          budgets } = useBudgets()
+          budgets,code } = useBudgets()
   
   const { t } = useTranslation();
 
@@ -40,21 +40,22 @@ function AddExpenseModal({show,handleClose,budgetId}) {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} backdrop="static">
 
-        <Modal.Header closeButton>
-          <Modal.Title>{t('addNewExpense')}</Modal.Title>
+        <Modal.Header closeButton={false}>
+          <Modal.Title className='m-auto'>{t('addNewExpense')}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Form ref={formRef}>
+          <Form ref={formRef} className={code==='ar' ? 'text-end' :''}>
 
             <Form.Group className="mb-3" controlId="add-budget-name">
-              <Form.Label>{t('desc')} :</Form.Label>
+              <Form.Label>{t('desc')}</Form.Label>
               <Form.Control
                 type="text"
                 autoFocus
                 name="description"
+                className={code==='ar' ? 'text-end' :''}
                 required
               />
             </Form.Group>
@@ -66,13 +67,20 @@ function AddExpenseModal({show,handleClose,budgetId}) {
                 min={0}
                 step={0.1}
                 name='amount'
+                className={code==='ar' ? 'text-end' :''}
                 required 
               />
             </Form.Group>
 
-            <Form.Select name="budget" defaultValue={budgetId}>
+            <Form.Select name="budget" defaultValue={budgetId} className={code==='ar' ? 'text-end' :''}>
                 {
                     budgets.map(budget => {
+
+                      if (budget.id === UN_CATEGORIZED_BUDGET_ID && code === 'ar') {
+                        return (
+                          <option key={budget.id} value={budget.id}>غير مصنفة</option>
+                        )
+                      }
                         return (
                             <option key={budget.id} value={budget.id}>{budget.name}</option>
                         )
@@ -84,7 +92,7 @@ function AddExpenseModal({show,handleClose,budgetId}) {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="danger" onClick={handleClose}>
             {t('close')}
           </Button>
           <Button variant="primary" onClick={handleSubmit}>

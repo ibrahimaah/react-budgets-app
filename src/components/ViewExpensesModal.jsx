@@ -21,10 +21,10 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} backdrop="static">
 
-        <Modal.Header closeButton>
-          <Modal.Title>
+        <Modal.Header closeButton={false}>
+          <Modal.Title className='m-auto'>
             {(budgetId === UN_CATEGORIZED_BUDGET_ID && code === 'ar') ? t('expenses') + ' غير مصنفة' : budget?.name+' - '+ t('expenses') }
           </Modal.Title>
         </Modal.Header>
@@ -51,7 +51,11 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
           </Stack>
         </Modal.Body>
 
-       
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleClose}>
+            {t('close')}
+          </Button> 
+        </Modal.Footer>
 
       </Modal>
     </>

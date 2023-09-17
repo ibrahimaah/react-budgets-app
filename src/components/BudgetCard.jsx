@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 
 export default function BudgetCard({name , amount, max, budget_id, showBudgetExpensesModal ,showExpensesModal}) {
-  const { getBudgetById, addBudget, deleteItem } =useBudgets();
+  const { getBudgetById, addBudget, deleteItem, code } =useBudgets();
 
   
   
@@ -47,8 +47,8 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
       
         <Card.Body>
 
-          <Card.Title className="d-flex justify-content-between align-items-baseline">
-              <p className="me-auto display-6 text-secondary">
+          <Card.Title className={`d-flex justify-content-between align-items-baseline ${code ==='ar' ? 'flex-row-reverse' : ''}`}>
+              <p className="display-6 text-secondary">
                   {name}
               </p>
               <div className="d-flex align-items-baseline">
@@ -73,10 +73,13 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
 
           {
             budget_id &&
-            (<Stack direction="horizontal" gap={3}>
+            (<Stack direction="horizontal" gap={3} className={code==='ar' ? 'flex-row-reverse' : ''}>
               <Button variant="outline-primary"  onClick={()=>showBudgetExpensesModal(budget_id)}>{t('addExpense')}</Button>
               <Button variant="outline-secondary" onClick = {() => showExpensesModal(budget_id) }>{t('viewExpenses')}</Button>
-              { (budget_id !== UN_CATEGORIZED_BUDGET_ID)  && (<Button variant="outline-danger" className="ms-auto"  onClick = {() => deleteBudget(budget_id) }>{t('delete')}</Button>) }
+              { (budget_id !== UN_CATEGORIZED_BUDGET_ID)  && (<Button 
+                  variant="outline-danger" 
+                  className={`m${code==='ar' ? 'e' : 's'}-auto`}  
+                  onClick = {() => deleteBudget(budget_id) }>{t('delete')}</Button>) }
             </Stack>)
           }
         </Card.Body>
