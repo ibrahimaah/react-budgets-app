@@ -2,7 +2,6 @@
 import { Button, Modal, Stack } from 'react-bootstrap';
 import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from '../contexts/BudgetsContext';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { currencyFormatter } from '../utils';
 
 // import { useBudgets } from '../contexts/BudgetsContext';

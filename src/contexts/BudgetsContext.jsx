@@ -1,7 +1,7 @@
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { v4 } from "uuid";
+import { createContext, useContext, useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { v4 } from "uuid";
 import { useTranslation } from "react-i18next";
 
 /**
@@ -14,7 +14,9 @@ import { useTranslation } from "react-i18next";
  * id, desc, amount, budget_id
  * }
  */
+
 export const UN_CATEGORIZED_BUDGET_ID = 'un_categorized'
+
 // 1- create context
 const BudgetsContext = createContext({
   budgets:[],
@@ -34,22 +36,23 @@ const BudgetsContext = createContext({
 export const BudgetsProvider = ({children}) => 
 {
   
-  const [budgets , setBudgets] = useLocalStorage('budgets',[]);
-  const [expenses, setExpenses] = useLocalStorage('expenses',[]);
+  const [budgets , setBudgets] = useLocalStorage('budgets',[])
+  const [expenses, setExpenses] = useLocalStorage('expenses',[])
 
+  //for translation purposes
   const [code,setCode] = useLocalStorage('code','en')
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation()
 
+  /**
+   * Main Functions
+   */
   const getBudgetById = budgetId => budgets.find(budget => budget.id === budgetId)
 
-  const getBudgetExpenses = budgetId => {
-    return expenses.filter(expense => expense.budgetId === budgetId)
-  }
+  const getBudgetExpenses = budgetId => expenses.filter(expense => expense.budgetId === budgetId)
   
-  const getBudgetExpensesTotalAmount = (budgetId) => 
-  { 
-    return getBudgetExpenses(budgetId).reduce((total,expense) => total+expense.amount ,0)
-  }
+  
+  const getBudgetExpensesTotalAmount = budgetId => getBudgetExpenses(budgetId).reduce((total,expense) => total+expense.amount ,0)
+  
 
 
   const addExpense = ({budgetId,amount,description}) => {
@@ -72,6 +75,7 @@ export const BudgetsProvider = ({children}) =>
   }
 
   const deleteItem = ({id,item_type}) => {
+    
     if (item_type === "budget") {
       
       setExpenses(prevExpenses => {

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react' 
+import React, { useState } from 'react' 
 
-import { Button, Col, Container, Row, Stack, Form, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Button, Col, Container, Row, Stack } from 'react-bootstrap';
 import BudgetCard from './components/BudgetCard';
 import AddBudgetModal from './components/AddBudgetModal';
 import { UN_CATEGORIZED_BUDGET_ID, useBudgets } from './contexts/BudgetsContext';
 import AddExpenseModal from './components/AddExpenseModal';
 import ViewExpensesModal from './components/ViewExpensesModal';
-
+import '../src/index.css'
 const App = () => {
 
   let [showAddBudgetModal, setShowAddBudgetModal] = useState(false)
@@ -43,13 +43,9 @@ const App = () => {
   }
   
   const handleTrans = (code) => {
-    if (code === 'en') {
-      setCode('ar')
-      i18n.changeLanguage('ar')
-    }else{
-      setCode('en')
-      i18n.changeLanguage('en')
-    }
+    let newCode = code === 'en' ? 'ar' : 'en'
+      setCode(newCode)
+      i18n.changeLanguage(newCode)
   }
 
   
@@ -60,15 +56,7 @@ const App = () => {
       <Container className='my-4'>
 
         <Stack direction="horizontal" className="mb-4" gap={3}> 
-          <h1 style={{
-              fontFamily: 'Arial, sans-serif',
-              fontSize: '42px',
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
-              transition: 'color 0.3s ease-in-out'
-          }}
-          className='text-primary'>Budget Tracker</h1>
+          <h1 className='text-primary main-title'>Budget Tracker</h1>
           <Button 
               variant="primary" 
               className="ms-auto" 
@@ -76,8 +64,7 @@ const App = () => {
 
           <Button variant="outline-primary" 
                   onClick={() => showBudgetExpensesModal(UN_CATEGORIZED_BUDGET_ID)}>
-                    {t('addExpense')}
-                  </Button>
+                    {t('addExpense')}</Button>
 
           <Button 
               variant='success' 
@@ -101,7 +88,6 @@ const App = () => {
             return (
             <Col sm={budget.id === UN_CATEGORIZED_BUDGET_ID ? 8 : 6} key={budget.id}>
               <BudgetCard 
-                  // key={budget.id}
                   name={ (budget.id === UN_CATEGORIZED_BUDGET_ID && code === 'ar') ? 'غير مصنفة' : budget.name} 
                   amount={amount}
                   max={budget.max}

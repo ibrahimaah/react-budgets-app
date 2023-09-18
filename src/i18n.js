@@ -13,7 +13,6 @@ i18n
     resources: {
       en: {
         translation: {
-         welcome: "Welcome to React",
          addBudget:"Add Budget",
          addExpense:"Add Expense",
          viewExpenses:"View Expenses",
@@ -32,7 +31,6 @@ i18n
       },
       ar: {
         translation: {
-         welcome: "أهلاً وسهلاً",
          addBudget:"إضافة ميزانية",
          addExpense:"إضافة مصروف",
          viewExpenses:"عرض المصاريف",
