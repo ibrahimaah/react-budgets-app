@@ -34,7 +34,8 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
                         return (
                           <Stack className={code==='ar' ? 'flex-row-reverse' : ''} direction='horizontal' gap={3} key={expense.id}>
                                 <div>{expense?.description}</div>
-                                <div className={`m${code==='ar' ? 'e' : 's'}-auto`}  >{currencyFormatter(expense?.amount)}</div>
+                                <div className={`m${code==='ar' ? 'e' : 's'}-auto`}  dangerouslySetInnerHTML={{__html:currencyFormatter(expense?.amount,code)}}>
+                                </div>
                                 <div>
                                     <button 
                                         className='btn btn-sm btn-outline-danger'

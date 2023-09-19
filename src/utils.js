@@ -1,13 +1,12 @@
 ///////////////////////////////////////////////////////////
-const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits:0
-});
+export const currencyFormatter = (number, code) => {
+  if (code === 'ar') {
+    return `<span class='invisible'>ل</span>${number} <span>ل.س </span>`
+  } else if (code === 'en') {
+    return `${number} SYP`
+  }
+};
 
-export const currencyFormatter = (number) => {
-    return formatter.format(number);
-}
 ///////////////////////////////////////////////////////////
 
 // export const getColorByName = (name) => {

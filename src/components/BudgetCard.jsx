@@ -40,6 +40,9 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
     }
     
   }
+
+  const _amount =currencyFormatter(amount,code)
+  const _max =currencyFormatter(max,code)
   return (
     <Card style={{ width: '100%' }} className={"mb-4 bg-opacity-10 bg-"+cardState}>
       
@@ -50,10 +53,10 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
                   {name}
               </p>
               <div className="d-flex align-items-baseline">
-                  <span className={"fs-2 text-"+cardState}>{currencyFormatter(amount)}</span>  
+                  <span className={"fs-2 text-"+cardState} dangerouslySetInnerHTML={{__html:_amount}}></span>  
                   { max && (<>
                     <span className="fs-2 text-muted mx-1">/</span>
-                    <span className="fs-4 text-muted">{currencyFormatter(max)}</span>
+                    <span className="fs-4 text-muted" dangerouslySetInnerHTML={{__html:_max}}></span>
                   </>)}
               </div>
           </Card.Title>
