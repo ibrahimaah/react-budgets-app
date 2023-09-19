@@ -49,7 +49,7 @@ function ViewExpensesModal({show,handleClose,budgetId}) {
         </Modal.Body>
 
         <Modal.Footer className={code === 'ar' ? 'justify-content-start' : ''}>
-          <Button variant="danger" onClick={handleClose}>
+          <Button className='btn-sm' variant="danger" onClick={handleClose}>
             {t('close')}
           </Button> 
         </Modal.Footer>

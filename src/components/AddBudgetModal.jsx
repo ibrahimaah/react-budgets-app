@@ -71,10 +71,10 @@ function AddBudgetModal({show,handleClose}) {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="danger" onClick={handleClose}>
+          <Button className='btn-sm' variant="danger" onClick={handleClose}>
             {t('close')}
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button className='btn-sm' variant="primary" onClick={handleSubmit}>
             {t('add')}
           </Button>
         </Modal.Footer>

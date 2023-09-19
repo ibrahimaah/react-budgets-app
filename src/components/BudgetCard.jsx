@@ -72,11 +72,11 @@ export default function BudgetCard({name , amount, max, budget_id, showBudgetExp
           {
             budget_id &&
             (<Stack direction="horizontal" gap={3} className={code==='ar' ? 'flex-row-reverse' : ''}>
-              <Button variant="outline-primary"  onClick={()=>showBudgetExpensesModal(budget_id)}>{t('addExpense')}</Button>
-              <Button variant="outline-secondary" onClick = {() => showExpensesModal(budget_id) }>{t('viewExpenses')}</Button>
+              <Button className='btn-sm' variant="outline-primary"  onClick={()=>showBudgetExpensesModal(budget_id)}>{t('addExpense')}</Button>
+              <Button className='btn-sm' variant="outline-secondary" onClick = {() => showExpensesModal(budget_id) }>{t('viewExpenses')}</Button>
               { (budget_id !== UN_CATEGORIZED_BUDGET_ID)  && (<Button 
                   variant="outline-danger" 
-                  className={`m${code==='ar' ? 'e' : 's'}-auto`}  
+                  className={`m${code==='ar' ? 'e' : 's'}-auto btn-sm`}  
                   onClick = {() => deleteBudget(budget_id) }>{t('delete')}</Button>) }
             </Stack>)
           }

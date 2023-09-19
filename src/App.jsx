@@ -55,23 +55,35 @@ const App = () => {
 
       <Container className='my-4'>
 
-        <Stack direction="horizontal" className="mb-4" gap={3}> 
-          <h1 className='text-primary main-title'>Budget Tracker</h1>
-          <Button 
-              variant="primary" 
-              className="ms-auto" 
-              onClick={() => setShowAddBudgetModal(true)}>{ t('addBudget') }</Button>
+        <Row className='mb-4 align-items-baseline'>
+          
+            <Col sm={7} xs={12}>
+              <h1 className='text-primary main-title'>Budget Tracker</h1>
+            </Col>
+            
+            <Col className='text-center'>
+              <Button 
+                  variant="primary" 
+                  className="ms-auto btn-sm" 
+                  onClick={() => setShowAddBudgetModal(true)}>{ t('addBudget') }</Button>
+            </Col>
 
-          <Button variant="outline-primary" 
-                  onClick={() => showBudgetExpensesModal(UN_CATEGORIZED_BUDGET_ID)}>
-                    {t('addExpense')}</Button>
+            <Col className='text-center'>
+              <Button variant="outline-primary" 
+                      className=' btn-sm'
+                        onClick={() => showBudgetExpensesModal(UN_CATEGORIZED_BUDGET_ID)}>
+                          {t('addExpense')}</Button>
+            </Col>
 
-          <Button 
-              variant='success' 
-              className='btn-sm'
-              onClick={()=>handleTrans(code)}>{code === 'en' ? 'العربية' : 'English'}
-          </Button>
-        </Stack>
+            <Col className='text-center'>
+              <Button 
+                  variant='success' 
+                  className='btn-sm'
+                  onClick={()=>handleTrans(code)}>{code === 'en' ? 'العربية' : 'English'}
+              </Button>
+            </Col>
+          
+        </Row>
 
         <Row className='justify-content-center'>
         {
